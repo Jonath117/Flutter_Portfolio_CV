@@ -9,6 +9,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  go_router: ^17.3.0
+  syncfusion_flutter_pdfviewer: ^33.2.13+1
+  url_launcher: ^6.3.2
 
 dev_dependencies:
   flutter_test:
@@ -17,3 +20,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+  - assets/documents/
