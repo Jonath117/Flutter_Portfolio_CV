@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
-import '../features/home/home_section.dart';
+import 'package:go_router/go_router.dart';
 
 class MainLayout extends StatelessWidget {
-  const MainLayout({super.key});
+  final Widget child;
+
+  const MainLayout({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
         centerTitle: false,
-        // Línea negra divisora inferior
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(1.0),
           child: Container(color: Colors.black, height: 1.0),
@@ -29,39 +31,26 @@ class MainLayout extends StatelessWidget {
           ),
         ),
         actions: [
-          _buildNavTextButton('Inicio'),
+          _buildNavTextButton(context, 'Inicio', '/'),
           const SizedBox(width: 20),
-          _buildNavTextButton('Artículos'),
+          _buildNavTextButton(context, 'Artículos', '/articles'),
           const SizedBox(width: 20),
-          _buildNavTextButton('Proyectos'),
+          _buildNavTextButton(context, 'Proyectos', '/projects'),
           const SizedBox(width: 20),
-          _buildNavTextButton('CV'),
+          _buildNavTextButton(context, 'CV', '/cv'),
           const SizedBox(width: 50),
         ],
       ),
 
       body: Column(
         children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Container(
-                    height: 750,
-                    color: Colors.grey[50],
-                    child: const Center(child: HomeSection()),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          Expanded(child: child),
 
           Container(
             width: double.infinity,
             padding: const EdgeInsets.symmetric(vertical: 20),
             decoration: const BoxDecoration(
               color: Colors.white,
-              // Línea negra divisora superior
               border: Border(top: BorderSide(color: Colors.black, width: 1.0)),
             ),
             child: Column(
@@ -75,10 +64,7 @@ class MainLayout extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    _buildFooterLink(
-                      Icons.work,
-                      'LinkedIn',
-                    ), // Puedes cambiar el Icon por Image.asset si usas tus PNG/SVG
+                    _buildFooterLink(Icons.work, 'LinkedIn'),
                     const SizedBox(width: 30),
                     _buildFooterLink(Icons.code, 'GitHub'),
                   ],
@@ -91,9 +77,9 @@ class MainLayout extends StatelessWidget {
     );
   }
 
-  Widget _buildNavTextButton(String title) {
+  Widget _buildNavTextButton(BuildContext context, String title, String route) {
     return TextButton(
-      onPressed: () {},
+      onPressed: () => context.go(route),
       style: TextButton.styleFrom(
         foregroundColor: Colors.black87,
         textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
@@ -104,9 +90,7 @@ class MainLayout extends StatelessWidget {
 
   Widget _buildFooterLink(IconData icon, String text) {
     return InkWell(
-      onTap: () {
-        // Lógica para abrir url
-      },
+      onTap: () {},
       child: Row(
         children: [
           Icon(icon, size: 20, color: Colors.black87),
